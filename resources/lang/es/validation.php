@@ -181,5 +181,10 @@ return [
         'title'                 => 'título',
         'username'              => 'usuario',
         'year'                  => 'año',
+        'customer_name'         => 'nombre',
+        'customer_email'        => 'correo electrónico',
+        'customer_mobile'       => 'teléfono o celular',
+        'total_price'           => 'precio total',
+        'quantity'              => 'cantidad',
     ],
 ];

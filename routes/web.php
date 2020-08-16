@@ -20,7 +20,9 @@ Route::get('/', 'ProductController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'OrderController@index');
+	Route::get('/order/preview/{id}', 'OrderController@preview')->name('order.preview');
 	Route::resource('order', 'OrderController')->except([
 		'index'
 	]);
+
 });

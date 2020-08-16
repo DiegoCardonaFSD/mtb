@@ -15,7 +15,7 @@ class OrderControllerTest extends TestCase
    
 
     public function test_index(){
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
         $product = factory(Product::class)->create();
@@ -45,7 +45,7 @@ class OrderControllerTest extends TestCase
         $product = factory(Product::class)->create();
         $user    = factory(User::class)->create();
         
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $faker = \Faker\Factory::create();
         $fakeOrder = [
             'customer_name'     => $user->name,
@@ -53,6 +53,7 @@ class OrderControllerTest extends TestCase
             'customer_mobile'   => $faker->randomNumber(7),
             'total_price'       => $faker->randomNumber(7),
             'quantity'          => $faker->numberBetween(1,3),
+            'address'           => $faker->address,
             'product_id'        => $product->id,
             'user_id'           => $user->id,
         ];
@@ -65,10 +66,33 @@ class OrderControllerTest extends TestCase
 
         $order = Order::first();
 
-        $this->assertDatabaseHas('orders', $fakeOrder);
         $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
         $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
 
+        $response->assertSee('order/preview');
+    }
+
+    public function test_preview(){
+
+        $user = factory(User::class)->create();
+        $product = factory(Product::class)->create();
+
+        $order = factory(Order::class)->create([
+            'product_id'    => $product->id,
+            'user_id'       => $user->id,
+        ]);
+
+        
+        $this->actingAs($user);
+
+        $response = $this->get("/order/preview/{$order->id}");
+
+        $response->assertViewIs('admin.order.preview')
+            ->assertSee($order->customer_name) 
+            ->assertSee($order->customer_email) 
+            ->assertSee('Resumen de la Orden')
+            ->assertOk()
+            ->assertViewHas('order', $order); 
         
     }
 

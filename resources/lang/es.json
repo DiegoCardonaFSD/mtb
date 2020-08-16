@@ -52,5 +52,23 @@
    "CREATED":"Creado",
    "PAYED":"Pagado",
    "REJECTED!":"Rechazado",
-   "Whoops!":"¡Vaya!"
+   "Whoops!":"¡Vaya!",
+   "CreateOrder":"Nueva Orden",
+   "CreateOrderBtn":"Crear Nueva Orden",
+
+   "FormName":"Nombre",
+   "FormEmail":"Correo Electrónico",
+   "FormMobile":"Teléfono o Celulár",
+   "FormAddress":"Dirección de Entrega",
+   "FormAddressSuggest":"Formato Sugerido (dirección, Ciudad, Departamento, Codigo Postal)",
+   "FormResume":"Resumen de la Orden",
+   "FormPricePerProduct":"Precio Unitario",
+   "FormTotalPrice":"Precio Total",
+   "FormQuantity":"Cantidad",
+   "FormQuantityPlaceHolder":"Seleccione una opción",
+   "FormSendBtn":"Guardar",
+   "FormEditBtn":"Modificar",
+   "PayWithPlaceToPay":"Pagar con Place To Pay",
+
+   "BackBtn":"Regresar"
 }

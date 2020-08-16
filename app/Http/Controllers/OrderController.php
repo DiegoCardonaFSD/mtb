@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
 use Illuminate\Http\Request;
 use Validator;
+use App\Http\Requests\OrderRequest;
+
+
+use App\Order;
+use App\Product;
 
 class OrderController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +32,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $product = Product::first();
+        return view('admin.order.new', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -38,29 +44,17 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $rules = array(
-            'customer_name'     => 'required',
-            'customer_email'    => 'required|email',
-            'customer_mobile'   => 'required|numeric',
-            'total_price'       => 'required|numeric',
-            'quantity'          => 'required|in:1,2,3',
-            'product_id'        => 'required|numeric',
-            'user_id'           => 'required|numeric',
-        );
-        $validator = Validator::make($request->all(), $rules);
+        $product = Product::findOrFail($request->product_id);
+        // store
+        $order = new order($request->all());
+        $order->product_id = $product->id;
+        $order->user_id = auth()->user()->id;
+        $order->total_price = $order->quantity * $product->price;
+        $order->save();
 
-        // process the login
-        if ($validator->fails()) {
-            return $validator->messages()->toJson();
-        } else {
-            // store
-            $order = new order($request->all());
-            $order->save();
-
-            return redirect()->route('order.show', $order);
-        }
+        return redirect()->route('order.preview', $order);
     }
 
     /**
@@ -75,6 +69,14 @@ class OrderController extends Controller
         return "showw";
     }
 
+    public function preview($id)
+    {
+        $order = Order::with('product')->where('id', $id)->first();
+        return view('admin.order.preview', [
+            'order'     => $order,
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -84,6 +86,14 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         //
+        $product    = Product::first();
+        $user       = auth()->user();
+        return view('admin.order.edit', [
+            'product'   => $product,
+            'user'      => $user,
+            'order'     => $order,
+        ]);
+
     }
 
     /**
