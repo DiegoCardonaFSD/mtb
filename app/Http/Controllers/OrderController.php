@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Validator;
 
 class OrderController extends Controller
 {
@@ -39,7 +40,27 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $rules = array(
+            'customer_name'     => 'required',
+            'customer_email'    => 'required|email',
+            'customer_mobile'   => 'required|numeric',
+            'total_price'       => 'required|numeric',
+            'quantity'          => 'required|in:1,2,3',
+            'product_id'        => 'required|numeric',
+            'user_id'           => 'required|numeric',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return $validator->messages()->toJson();
+        } else {
+            // store
+            $order = new order($request->all());
+            $order->save();
+
+            return redirect()->route('order.show', $order);
+        }
     }
 
     /**
@@ -51,6 +72,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         //
+        return "showw";
     }
 
     /**
