@@ -14,7 +14,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = new Order();
+        if(auth()->user()->role == "client"){
+            $orders = Order::where('user_id', auth()->user()->id);
+        }
+        $orders = $orders->orderBy('id', 'DESC')->paginate();
+        return view('admin.order.list', [
+            'orders' => $orders
+        ]);
     }
 
     /**

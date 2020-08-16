@@ -18,7 +18,9 @@ class CreateTableOrders extends Migration
             $table->string('customer_name', 80);
             $table->string('customer_email', 120);
             $table->string('customer_mobile', 40);
+            $table->double('price', 12, 2);
             $table->enum('status', ['CREATED','PAYED','REJECTED'])->default('CREATED');
+            $table->enum('status_order', ['NEW','PROCESSING','ENDED'])->default('NEW');
 
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

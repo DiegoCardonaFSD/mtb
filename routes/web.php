@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'ProductController@index')->name('home');
-Route::get('/home', 'HomeController@index');
-// Route::resource('dentist', 'DentistsController');
-Route::resource('order', 'OrderController');
+
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/home', 'OrderController@index');
+	Route::resource('order', 'OrderController')->except([
+		'index'
+	]);
+});
