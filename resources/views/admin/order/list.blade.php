@@ -37,7 +37,7 @@
                                         <tr>
                                           <th scope="row">{{ $order->id}}</th>
                                           <td>{{ $order->customer_name}}</td>
-                                          <td>${{ number_format($order->price, 0) }} COP</td>
+                                          <td>${{ number_format($order->total_price, 0) }} COP</td>
                                           <td>{{ __($order->status_order) }}</td>
                                           <td>{{ __($order->status) }}</td>
                                           <td>

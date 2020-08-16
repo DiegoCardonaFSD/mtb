@@ -18,7 +18,8 @@ class CreateTableOrders extends Migration
             $table->string('customer_name', 80);
             $table->string('customer_email', 120);
             $table->string('customer_mobile', 40);
-            $table->double('price', 12, 2);
+            $table->double('total_price', 12, 2);
+            $table->integer('quantity')->default(1);
             $table->enum('status', ['CREATED','PAYED','REJECTED'])->default('CREATED');
             $table->enum('status_order', ['NEW','PROCESSING','ENDED'])->default('NEW');
 

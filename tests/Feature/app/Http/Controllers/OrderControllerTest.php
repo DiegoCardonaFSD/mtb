@@ -27,10 +27,46 @@ class OrderControllerTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->get('/home')
+        $response = $this->get('/home');
+
+        $orders = (new Order())->roleCondition()->orderBy('id', 'DESC')->paginate();
+
+        $response->assertViewIs('admin.order.list')
             ->assertSee($orders[0]->customer_name) 
             ->assertSee('Listado de Ordenes')
-            ->assertStatus(200);
+            ->assertOk()
+            ->assertViewHas('orders', $orders); 
         
+    }
+
+
+    public function test_store(){
+
+        $product = factory(Product::class)->create();
+        $user    = factory(User::class)->create();
+        
+        $this->withoutExceptionHandling();
+        $faker = \Faker\Factory::create();
+        $fakeOrder = [
+            'customer_name'     => $user->name,
+            'customer_email'    => $user->email,
+            'customer_mobile'   => $faker->randomNumber(7),
+            'total_price'       => $faker->randomNumber(7),
+            'quantity'          => $faker->numberBetween(1,3),
+            'product_id'        => $product->id,
+            'user_id'           => $user->id,
+        ];
+
+        $this->actingAs($user);
+
+        $response = $this->post('/order', $fakeOrder);
+
+        $response->assertOk();
+
+        $order = Order::first();
+
+        $this->assertDatabaseHas('orders', $fakeOrder);
+        $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
+        $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,11 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = new Order();
-        if(auth()->user()->role == "client"){
-            $orders = Order::where('user_id', auth()->user()->id);
-        }
-        $orders = $orders->orderBy('id', 'DESC')->paginate();
+        $orders = (new Order())->roleCondition()->orderBy('id', 'DESC')->paginate();
         return view('admin.order.list', [
             'orders' => $orders
         ]);
@@ -42,7 +39,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
