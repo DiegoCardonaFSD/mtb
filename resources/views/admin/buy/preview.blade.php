@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">          
 
-           <h5>{{__('FormResumeView')}}</h5>
+           <h5>{{__('FormResumeBuy')}}</h5>
 
             <table class="table table-bordered">
             <tbody>
@@ -47,7 +47,8 @@
               </div>
             </div>
             <hr>
-            <a href="{{ route('order.list') }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
+            <button type="submit" class="btn btn-success">{{ __('PayWithPlaceToPay') }}</button>
+            <a href="{{ route('order.edit',$order->id) }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
             <hr>
 
 

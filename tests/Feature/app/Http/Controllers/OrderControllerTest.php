@@ -29,10 +29,12 @@ class OrderControllerTest extends TestCase
 
         $response = $this->get('/home');
 
+        $this->assertCount(5, Order::all()); 
+
         $orders = (new Order())->roleCondition()->orderBy('id', 'DESC')->paginate();
 
-        $response->assertViewIs('admin.order.list')
-            ->assertSee($orders[0]->customer_name) 
+        $response->assertViewIs('admin.order.index')
+            ->assertSee($orders[0]->id) 
             ->assertSee('Listado de Ordenes')
             ->assertOk()
             ->assertViewHas('orders', $orders); 
@@ -66,6 +68,9 @@ class OrderControllerTest extends TestCase
 
         $order = Order::first();
 
+
+        $this->assertCount(1, Order::all()); 
+
         $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
         $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
 
@@ -86,6 +91,8 @@ class OrderControllerTest extends TestCase
 
         
         $this->actingAs($user);
+
+        $this->assertCount(1, Order::all()); 
 
         $response = $this->get("/order/preview/{$order->id}");
 
@@ -127,14 +134,39 @@ class OrderControllerTest extends TestCase
 
         $response = $this->put("/order/{$order->id}", $fakeOrder);
 
-        //$response->assertOk();
-        
-        $order = Order::first();
+        $order = $order->fresh();
         
         $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
         $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
 
         $response->assertRedirect("/order/preview/{$order->id}");
+        
+    }
+
+
+    public function test_delete(){
+
+        $product = factory(Product::class)->create();
+        $user    = factory(User::class)->create();
+
+
+        $order = factory(Order::class)->create([
+            'product_id'    => $product->id,
+            'user_id'       => $user->id,
+        ]);
+        
+
+        // $this->withoutExceptionHandling();
+    
+        $this->actingAs($user);
+
+        $this->assertCount(1, Order::all()); 
+
+        $response = $this->delete("/order/{$order->id}");
+
+        $this->assertCount(0, Order::all()); 
+
+        
         
     }
 

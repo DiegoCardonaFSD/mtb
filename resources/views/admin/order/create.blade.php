@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">{{ __('EditOrder') }}</div>
+                <div class="card-header">{{ __('CreateOrder') }}</div>
 
                 <div class="card-body">
                         @if (session('status'))
@@ -13,26 +13,24 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <div class="row">
+  
+                         <div class="row">
                            <div class="col">
                              @include('admin.order.error')
                            </div>
                          </div>
                          <div class="row">
                             <div class="col">
-                               {!! Form::model($order, ['route' => ['order.update', $order->id]]) !!}
-                                @method('PUT')
+                                {!! Form::open(['route' => ['order.store']]) !!}
 
-                                @include('admin.order.form')
+                                @include('admin.order.form') 
 
                                   <button type="submit" class="btn btn-success">{{__('FormSendEditBtn')}}</button>
                                   <a href="{{ route('order.list') }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
 
                                   <hr>
-                               
 
                                 {!! Form::close() !!}
-
                             </div>
                         </div>      
                 </div>

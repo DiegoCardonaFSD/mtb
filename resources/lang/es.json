@@ -27,7 +27,7 @@
    "Please confirm your password before continuing.":"Por favor confirme su contraseña antes de continuar.",
    "Regards":"Saludos",
    "Register":"Registrarse",
-   "RegisterInvitation":"Te invitamos a registrarte para que tengas mayor control sobre el producto que vas a comprar",
+   "RegisterInvitation":"Antes de realizar una compra debes registrate <br> El proceso de compra consta de 3 simples pasos: <br> Paso 1. Ingresa tu información de compra.<br> Paso 2. Verifica tus datos. <br> Paso 3. Paga Seguro con Place To Pay.",
    "Remember Me":"Mantener sesión activa",
    "Reset Password":"Restablecer Contraseña",
    "Reset Password Notification":"Notificación de restablecimiento de contraseña",
@@ -72,6 +72,11 @@
    "FormEditBtn":"Modificar",
    "PayWithPlaceToPay":"Pagar con Place To Pay",
    "BuyItNowBtn":"Comprar AHORA",
+   "DestroyConfirmation":"La orden ha sido eliminada con éxito",
+   "DeleteConfirmMessage":"¿Está seguro que desea eliminar la orden?",
+   "FormResumeView":"Detalle de la orden",
+   "CreateOrderBuy":"Paso 1. Registre su compra",
+   "FormResumeBuy":"Paso 2. Verifique sus datos",
 
    "BackBtn":"Regresar"
 }

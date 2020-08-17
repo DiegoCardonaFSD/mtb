@@ -27,6 +27,7 @@ class OrderRequest extends FormRequest
             'customer_name'     => 'required',
             'customer_email'    => 'required|email',
             'customer_mobile'   => 'required|numeric',
+            'address'          => 'required',
             'quantity'          => 'required|in:1,2,3',
             'product_id'        => 'required|numeric',
         ];

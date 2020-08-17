@@ -25,7 +25,3 @@
 
   {{ Form::hidden('product_id', $product->id) }}
 
-  <button type="submit" class="btn btn-success">{{__('FormSendEditBtn')}}</button>
-  <a href="{{ url('/home') }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
-
-  <hr>

@@ -20,8 +20,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = (new Order())->roleCondition()->orderBy('id', 'DESC')->paginate();
-        return view('admin.order.list', [
-            'orders' => $orders
+        return view('admin.order.index', [
+            'orders'    => $orders,
+            'user'      => auth()->user()
         ]);
     }
 
@@ -33,7 +34,7 @@ class OrderController extends Controller
     public function create()
     {
         $product = Product::first();
-        return view('admin.order.new', [
+        return view('admin.order.create', [
             'product' => $product
         ]);
     }
@@ -65,13 +66,21 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
-        return "showw";
+        return view('admin.order.show', [
+            'order'     => $order,
+        ]);
+        
     }
 
-    public function preview($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+
+    public function preview(Order $order)
     {
-        $order = Order::with('product')->where('id', $id)->first();
         return view('admin.order.preview', [
             'order'     => $order,
         ]);
@@ -105,7 +114,7 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $product = Product::findOrFail($request->product_id);
-        // store
+
         $order->fill($request->all());
         $order->total_price = $order->quantity * $product->price;
         $order->save();
@@ -121,6 +130,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return back()->with('info', __('DestroyConfirmation'));
     }
 }
