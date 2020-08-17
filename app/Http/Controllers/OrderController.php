@@ -85,7 +85,6 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
         $product    = Product::first();
         $user       = auth()->user();
         return view('admin.order.edit', [
@@ -103,9 +102,15 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderRequest $request, Order $order)
     {
-        //
+        $product = Product::findOrFail($request->product_id);
+        // store
+        $order->fill($request->all());
+        $order->total_price = $order->quantity * $product->price;
+        $order->save();
+
+        return redirect()->route('order.preview', $order);
     }
 
     /**

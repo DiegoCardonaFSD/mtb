@@ -69,7 +69,9 @@ class OrderControllerTest extends TestCase
         $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
         $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
 
+        $response->assertRedirect("/order/preview/{$order->id}");
         $response->assertSee('order/preview');
+
     }
 
     public function test_preview(){
@@ -93,6 +95,46 @@ class OrderControllerTest extends TestCase
             ->assertSee('Resumen de la Orden')
             ->assertOk()
             ->assertViewHas('order', $order); 
+        
+    }
+
+    public function test_edit(){
+
+        $product = factory(Product::class)->create();
+        $user    = factory(User::class)->create();
+
+
+        $order = factory(Order::class)->create([
+            'product_id'    => $product->id,
+            'user_id'       => $user->id,
+        ]);
+        
+
+        // $this->withoutExceptionHandling();
+        $faker = \Faker\Factory::create();
+        $fakeOrder = [
+            'customer_name'     => $faker->name,
+            'customer_email'    => $faker->email,
+            'customer_mobile'   => $faker->randomNumber(7),
+            'total_price'       => $faker->randomNumber(7),
+            'quantity'          => $faker->numberBetween(1,3),
+            'address'           => $faker->address,
+            'product_id'        => $product->id,
+            'user_id'           => $user->id,
+        ];
+
+        $this->actingAs($user);
+
+        $response = $this->put("/order/{$order->id}", $fakeOrder);
+
+        //$response->assertOk();
+        
+        $order = Order::first();
+        
+        $this->assertEquals($order->customer_name,   $fakeOrder['customer_name']); 
+        $this->assertEquals($order->customer_mobile, $fakeOrder['customer_mobile']); 
+
+        $response->assertRedirect("/order/preview/{$order->id}");
         
     }
 

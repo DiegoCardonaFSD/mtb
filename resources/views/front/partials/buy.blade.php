@@ -1,6 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-md-8 mx-auto">
-        <button type="button" class="btn btn-success btn-lg">Comprar Ahora</button>
+         <a href="{{ url('/register') }}" class="btn btn-success">{{ __('BuyItNowBtn') }}</a>
+         <hr>
     </div>
 </div>
 <br>

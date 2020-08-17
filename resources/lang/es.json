@@ -54,6 +54,7 @@
    "REJECTED!":"Rechazado",
    "Whoops!":"¡Vaya!",
    "CreateOrder":"Nueva Orden",
+   "EditOrder":"Editar Orden",
    "CreateOrderBtn":"Crear Nueva Orden",
 
    "FormName":"Nombre",
@@ -67,8 +68,10 @@
    "FormQuantity":"Cantidad",
    "FormQuantityPlaceHolder":"Seleccione una opción",
    "FormSendBtn":"Guardar",
+   "FormSendEditBtn":"Guardar y Pagar",
    "FormEditBtn":"Modificar",
    "PayWithPlaceToPay":"Pagar con Place To Pay",
+   "BuyItNowBtn":"Comprar AHORA",
 
    "BackBtn":"Regresar"
 }

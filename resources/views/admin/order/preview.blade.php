@@ -48,7 +48,7 @@
             </div>
             <hr>
             <button type="submit" class="btn btn-success">{{ __('PayWithPlaceToPay') }}</button>
-            <button class="btn btn-primary">{{__('FormEditBtn')}}</button>
+            <a href="{{ url('/order/'.$order->id.'/edit') }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
             <hr>
 
 
