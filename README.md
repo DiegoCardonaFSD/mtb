@@ -38,6 +38,8 @@ Como es usual  la mayoría de los usuarios que van a la pasarela de pagos, despu
 
 - El formulario se usa como un partial desde varias vistas,  con el fin único de centralizar el manejo de éste, simplificando los puntos de contacto a la hora de hacer modificaciones.
 
+- Creé un cronjob que ejecuta un comando que realicé con el fin de estar verificando periodicamente el esatado de las transcciónes que se encuentran en proceso.
+
 - A nivel de git, utilicé la rama master que viene por defecto, pero hice todo mi desarrollo en la rama develop, que es como usalmente me gusta realizarlo, solo voy a master cuando tengo una versión estable para producción.
 
 ## Instrucciones de instalación

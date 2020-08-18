@@ -11,8 +11,7 @@ use App\Order;
 
 class OrderControllerTest extends TestCase
 {
-    use RefreshDatabase;
-   
+    use RefreshDatabase;   
 
     public function test_index(){
         // $this->withoutExceptionHandling();
