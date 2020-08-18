@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Order;
+use App\Services\Payments\PaymentAdapter;
+use App\Services\Payments\PlaceToPay;
 
 class CheckPaymentInProgress extends Command
 {
