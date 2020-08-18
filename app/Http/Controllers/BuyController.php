@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests\OrderRequest;
-
-
+use Illuminate\Support\Str;
 use App\Order;
 use App\Product;
 
@@ -40,6 +39,7 @@ class BuyController extends Controller
         $order->product_id = $product->id;
         $order->user_id = auth()->user()->id;
         $order->total_price = $order->quantity * $product->price;
+        $order->uuid        = Str::uuid()->toString();
         $order->save();
 
         return redirect()->route('buy.preview', $order);

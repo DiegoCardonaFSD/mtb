@@ -24,10 +24,13 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
+            'document_type'     => 'required',
+            'document'          => 'required|numeric|digits_between:6,15',
             'customer_name'     => 'required',
+            'customer_lastname' => 'required',
             'customer_email'    => 'required|email',
-            'customer_mobile'   => 'required|numeric',
-            'address'          => 'required',
+            'customer_mobile'   => 'required|numeric|digits_between:6,15',
+            'address'           => 'required',
             'quantity'          => 'required|in:1,2,3',
             'product_id'        => 'required|numeric',
         ];

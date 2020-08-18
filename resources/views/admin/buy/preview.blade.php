@@ -47,8 +47,13 @@
               </div>
             </div>
             <hr>
+
+            {!! Form::open(['route' => ['payment.create', $order->id]]) !!}
             <button type="submit" class="btn btn-success">{{ __('PayWithPlaceToPay') }}</button>
             <a href="{{ route('order.edit',$order->id) }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
+            {!! Form::close() !!}
+
+            
             <hr>
 
 

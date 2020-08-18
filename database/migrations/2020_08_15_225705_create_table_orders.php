@@ -15,7 +15,10 @@ class CreateTableOrders extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('document_type', 3);
+            $table->string('document', 80);
             $table->string('customer_name', 80);
+            $table->string('customer_lastname', 80);
             $table->string('customer_email', 120);
             $table->string('customer_mobile', 40);
             $table->string('address', 150);
@@ -23,7 +26,9 @@ class CreateTableOrders extends Migration
             $table->integer('quantity')->default(1);
             $table->enum('status', ['CREATED','PAYED','REJECTED'])->default('CREATED');
             $table->enum('status_order', ['NEW','PROCESSING','ENDED'])->default('NEW');
-
+            $table->string('uuid', 200);
+            $table->integer('request_id')->nullable();
+            $table->text('process_url')->nullable();
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 

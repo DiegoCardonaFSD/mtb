@@ -58,6 +58,9 @@
    "CreateOrderBtn":"Crear Nueva Orden",
 
    "FormName":"Nombre",
+   "FormLastName":"Apellido",
+   "FormDocumentType":"Tipo de Documento",
+   "FormDocument":"Documento de identidad",
    "FormEmail":"Correo Electrónico",
    "FormMobile":"Teléfono o Celulár",
    "FormAddress":"Dirección de Entrega",
@@ -77,6 +80,7 @@
    "FormResumeView":"Detalle de la orden",
    "CreateOrderBuy":"Paso 1. Registre su compra",
    "FormResumeBuy":"Paso 2. Verifique sus datos",
+   "FormStatusOrder":"Estado de la orden",
 
    "BackBtn":"Regresar"
 }

@@ -10,8 +10,20 @@
             <table class="table table-bordered">
             <tbody>
               <tr>
+                <th scope="row">{{__('FormDocumentType')}}</th>
+                <td>{{ $order->document_type }}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{__('FormDocument')}}</th>
+                <td>{{ $order->document }}</td>
+              </tr>
+              <tr>
                 <th scope="row">{{__('FormName')}}</th>
                 <td>{{ $order->customer_name }}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{__('FormLastName')}}</th>
+                <td>{{ $order->customer_lastname }}</td>
               </tr>
               <tr>
                 <th scope="row">{{__('FormEmail')}}</th>
@@ -47,8 +59,12 @@
               </div>
             </div>
             <hr>
+
+            {!! Form::open(['route' => ['payment.create', $order->id]]) !!}
             <button type="submit" class="btn btn-success">{{ __('PayWithPlaceToPay') }}</button>
             <a href="{{ url('/order/'.$order->id.'/edit') }}" class="btn btn-primary">{{ __('BackBtn') }}</a>
+            {!! Form::close() !!}
+
             <hr>
 
 

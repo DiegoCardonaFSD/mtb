@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use Validator;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
-
-
+use App\Services\Payments\PaymentAdapter;
+use App\Services\Payments\PlaceToPay;
 use App\Order;
 use App\Product;
 
@@ -50,9 +52,10 @@ class OrderController extends Controller
         $product = Product::findOrFail($request->product_id);
         // store
         $order = new order($request->all());
-        $order->product_id = $product->id;
-        $order->user_id = auth()->user()->id;
+        $order->product_id  = $product->id;
+        $order->user_id     = auth()->user()->id;
         $order->total_price = $order->quantity * $product->price;
+        $order->uuid        = Str::uuid()->toString();
         $order->save();
 
         return redirect()->route('order.preview', $order);
@@ -66,6 +69,19 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        if(
+            $order->status_order == env('ORDER_STATUS_PROCESSING') &&
+            (
+                $order->status == env('ORDER_STATUS_CREATED') ||
+                $order->status == env('ORDER_STATUS_REJECTED')
+            )
+        ){
+            $data['order'] = $order;
+            $paymentAdapter = new PaymentAdapter(new PlaceToPay($data));
+            $paymentAdapter->get(); 
+            $order = $order->fresh();
+        }
+
         return view('admin.order.show', [
             'order'     => $order,
         ]);

@@ -186,5 +186,7 @@ return [
         'customer_mobile'       => 'teléfono o celular',
         'total_price'           => 'precio total',
         'quantity'              => 'cantidad',
+        'document'              => 'documento',
+        'document_type'         => 'tipo de documento',
     ],
 ];

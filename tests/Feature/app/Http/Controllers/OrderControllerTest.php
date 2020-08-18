@@ -50,7 +50,10 @@ class OrderControllerTest extends TestCase
         // $this->withoutExceptionHandling();
         $faker = \Faker\Factory::create();
         $fakeOrder = [
-            'customer_name'     => $user->name,
+            'document_type'     => $faker->randomElement(array ('CC', 'CE', 'TI', 'RC', 'NIT', 'RUT')),
+            'document'          => $faker->numberBetween(100000, 999999),
+            'customer_name'     => $faker->firstName,
+            'customer_lastname' => $faker->lastName,
             'customer_email'    => $user->email,
             'customer_mobile'   => $faker->randomNumber(7),
             'total_price'       => $faker->randomNumber(7),
@@ -120,7 +123,10 @@ class OrderControllerTest extends TestCase
         // $this->withoutExceptionHandling();
         $faker = \Faker\Factory::create();
         $fakeOrder = [
-            'customer_name'     => $faker->name,
+            'document_type'     => $faker->randomElement(array ('CC', 'CE', 'TI', 'RC', 'NIT', 'RUT')),
+            'document'          => $faker->numberBetween(100000, 999999),
+            'customer_name'     => $faker->firstName,
+            'customer_lastname' => $faker->lastName,
             'customer_email'    => $faker->email,
             'customer_mobile'   => $faker->randomNumber(7),
             'total_price'       => $faker->randomNumber(7),

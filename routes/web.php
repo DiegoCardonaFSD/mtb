@@ -29,4 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/buy', 'BuyController@store')->name('buy.store');
 	Route::get('/buy/preview/{order}', 'BuyController@preview')->name('buy.preview');
 
+	Route::post('/payment/{order}', 'PaymentController@create')->name('payment.create');
+	Route::get('/payment/return/{uuid}', 'PaymentController@return')->name('payment.return');
+
 });
