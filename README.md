@@ -1,61 +1,84 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## Plataforma MTB - Ecommerce
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+La plataforma que realice, es una plataforma donde el cliente de MTB, puede entrar a nuestro sitio y ver la bicicleta que estamos ofreciendo en el momento, hay algunas fotos, una amplia descripción y un boton para comprar ahora, 
 
-## About Laravel
+Para esta plataforma decidí que registrarse es obligatorio antes de hacer la compra, esto con el fin de hacer uso de las migraciones, usar auth, y poder poner configurar diferentes relaciones en los modelos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Una vez el usuario se registra, ingresa a un proceso de checkout, que consta de 3 pasos:
+1. En el primero se solicita la información personal para hacer la orden (decidi pedirle todos los campos necesarios, para que Place To Pay nos lleve directamente, a la parte donde se ingresan los datos de tarjeta de credito.).
+2. Se muestra una pantalla donde el usuario puede verificar sus datos, editarlos o continuar el proceso al tercer paso.
+3. Inicio proceso en Place To Pay para realizar el pago.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+En esta plataforma podemos ver el listado de ordenes que hemos creado, independiente del estado que tengan, cabe anotar que los usuarios que son creados de manera autonoma por el formulario de registro, todos quedan en nuestra plataforma con el rol cliente,  de momento tenemos un unico administrador, cuyo objetivo es poder ver todas las ordentes que se han realizado en el sistema, para acceder a esta sección bascan con dar click en la opción Area de miembros.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Una vez ingresamos al area de miembros, vamos a poder interactura de diferente manera con las ordenes que hay allí registradas, vamos a poder registrar nuevas ordenes, editar, ver o eliminar,  todo dependiendo del estado en el que se encuentre la orden.
 
-## Learning Laravel
+Como es usual  la mayoria de los usuarios que van a la pasarela de pagos, despues de realizar el pago, no vuelven al nuestro sitio, para ello creamos una tarea programada que se encarga de esar verificando el estado de las ordenes pendientes de modo que podamos tener el estado de las ordenes actualizado.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Algunos de los conceptos que aplicamos en esta plaforma fueron:
 
-## Laravel Sponsors
+- TDD: tenemos varias  clases en el folder de tests para pruebas unitarias, donde nos enfocamos de manera didactica en validar los diferentes metodos que tenemos en los controladores, estas puebas fueron configuradas para hacerse en sqlite en memoria.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- En la base de datos, utilice las migraciones, los factory y los seeders, para toda la manipulacion de nuestros datos, y creación de datos de prueba.
 
-### Premium Partners
+- En toda la plataforma estamos usando el archivo de traducciones, configuramos la localización en America/Bogota y en español, de este modo dejamos preparada la plataforma para el momento en que tengamos que volverla multi-idioma 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+- Para las vistas uitlicé blade y tambien instalé la dependencia de Laravel/Collective para la manipulación de los formularios.
 
-## Contributing
+- En la mayoria de los casos utilcé los controladores estandar, en muchas otras prefierí crear metodos personalizados haciendo uso de rutas individuales, o de rutas genericas.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- para el consumo del api de Place to Pay, lo hice a traves de un adaptador, pensando en que a futuro pueden haber mas opciones y pensando siempre en tener las responsabilidades a nivel de codigo mas divididas.
 
-## Code of Conduct
+- Para el consumo del api, lo hice a traves de curl (ya que fue con el que hice el test para el api, de modo que me queria familiarizar antes, y por cuestiones de tiempo no me dio para implementar algo asi como Guzzle).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Siempre parto de la base de tener un codigo limpio, aunque a veces el tener un codigo limpio, implica tener mucho conocmiento a la hora de un desarrollador poder entrar a modificarlo, sin embargo, hice varios ciclos de refactorización al codigo.
 
-## Security Vulnerabilities
+- Tambien hice uso de un Request personalizado, donde implemente las validaciones de mis formularios.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- El formulario se usa como un partial desde varias vistas,  con el fin uinico de centralizar le manejo de este, simplificando los puntos de contacto a la hora de hacer modificaciones.
 
-## License
+- Implemente tambien el uso de un Repository, para ponder codigo que es repetitivo en varios metodos en un unico punto y asi tener solo un punto de contacto.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Instrucciones de instalación
+
+Hasta el momento, al configuración se hace de manera estandar como todas las aplicaciones de Laravel.
+
+1. se clona el repositorio.
+2. se ejecuta el comando composer install, para instalar todas las dependiencias del proyecto.
+3. se configura el archivo .env, con todas las variables de enterno que se utilizaron en el desarrollo.
+- En este punto es importante crear una base de datos en mysql con su respectivo usuario.
+- Le damos un titulo adecuado a la plataforma.
+- organizamos las variables de entorno:
+PLACE_TO_PAY_LOGIN="" //se coloca el login del entorno a conectar
+PLACE_TO_PAY_SECRET_KEY="" //se coloca la clave secreta
+PLACE_TO_PAY_EXPIRATION_MINUTES=10 //tiempo de expiración de la transacción por motivo de pruebas lo puse en 10 minutos
+PLACE_TO_PAY_CURRENCY="COP" //moneda por defecto peso Colombiano
+PLACE_TO_PAY_DEFAULT_LOCALE="es_CO" //localización por defecto Español Colombia
+PLACE_TO_PAY_RETURN_URL="http://...../payment/return/" se coloca el dominio donde de momento vamos a recibir el retorno cuando el usuario regrese de la pasarela a nuestra tienda.
+PLACE_TO_PAY_CANCEL_URL="http://...../payment/return/"
+PLACE_TO_PAY_SERVICE_URL="https://test.placetopay.com/redirection/api/session" //url del servicio que vamos a consumir
+
+- esto lo hacemos para no hardcodear estos estados en el codigo
+ORDER_STATUS_PROCESSING="PROCESSING"
+ORDER_STATUS_APPROVED="APPROVED"
+ORDER_STATUS_ENDED="ENDED"
+ORDER_STATUS_PAYED="PAYED"
+ORDER_STATUS_CREATED="CREATED"
+ORDER_STATUS_REJECTED="REJECTED"
+ORDER_STATUS_NEW="NEW"
+
+Ejecutamos las migraciones + los seeders 
+php artisan migrate
+php artisan db:seed
+
+De momento estas son las instrucciónes de instalación.
+
+
+
+
+
+
+
+
+
