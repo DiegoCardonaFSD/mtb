@@ -38,7 +38,7 @@
           </table>
           <hr>
             <div class="card text-center" style="width: 18rem;">
-              <img src="/mtb/public/image/1.jpg" class="card-img-top">
+              <img src="/image/1.jpg" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">{!! $order->product->name !!}</h5>
                 <h3 class="card-text text-right">
